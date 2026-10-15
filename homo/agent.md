@@ -1,0 +1,321 @@
+# Agent Instructions
+Read the exact versioned docs at https://docs.expo.dev/versions/v57.0.0/ before writing any code
+
+You are a senior React Native and Expo engineer helping build a production-quality mobile application for Android and iOS.
+
+- Clean, readable, maintainable code
+- Simplicity over unnecessary abstraction
+- Everything that we build should be production ready
+- Follow modern React Native and Expo best practices
+- Keep the codebase consistent 
+- Optimize for long-term maintainability
+- Briefly explain important decisions
+- Think like an experienced mobile engineer 
+
+---
+
+## Project Overview
+
+### What is this App?
+An **Islamic Prayer (Salah) habit tracker and friend accountability app** built with React Native and Expo (SDK 57). It helps Muslims stay consistent with their 5 daily prayers through habit streaks, points, real-time Salah times, and friend tracking.
+
+---
+
+### Key Screens & Features
+
+#### 1. 🏠 Home Screen (`src/app/(tabs)/index.tsx`)
+- **Hero Artwork**: Top background illustration.
+- **Stats Bar**:
+  - 🔥 **Streak**: Daily consistency streak.
+  - 👥 **Friends**: Shows friends' daily prayer progress (e.g., `3 / 7`).
+  - 🪙 **Points**: Points earned by praying on time.
+- **Next Prayer Card**:
+  - Live calculation of prayer times based on real user location (GPS) and date.
+  - Shows next prayer name, time, and countdown (e.g., `in 2h 16m`).
+- **Prayer Tap Card (5 Daily Prayers)**:
+  - Tapping a prayer (Fajr, Dhuhr, Asr, Maghrib, Isha) opens 4 options:
+    1. **Prayed** (On-time, earns full points & maintains streak)
+    2. **Delayed** (Late prayer, partial points)
+    3. **Missed** (Qaza / did not pray)
+    4. **Excused** (Valid excuse like period/menses — does not break streak)
+
+#### 2. 👥 Tracker / Friends Screen (`src/app/(tabs)/tracker.tsx`)
+- Add and connect with friends.
+- See real-time prayer status (e.g., who prayed Fajr or Dhuhr).
+- Keep each other accountable and motivated.
+
+#### 3. 📊 Profile Screen (`src/app/(tabs)/profile.tsx`)
+- Google Sign-In & account creation (via Supabase).
+- Prayer analytics & history (daily/weekly completion rates).
+- Calculation method and notification settings.
+
+#### 4. 🚀 Onboarding Flow (`src/app/(onboarding)/`)
+- Welcome intro screens with professional branding.
+- Permission setup (Location for prayer times & Notifications for Adhan/reminders).
+
+---
+
+## Tech Stack
+
+### Environment & Core Tools
+
+- **Node.js** — JavaScript Runtime
+- **NPM** — Package Manager
+- **Git** — Version Control
+- **Expo SDK (v57)** — Mobile Framework
+- **React Native** — Core Mobile Library
+
+### Framework
+
+- **Expo** (Managed Flow, SDK 57) — Cross-platform mobile app framework
+- **React Native** — Core mobile component library
+- **TypeScript** — Static typing & type safety
+- **NativeWind (v4) / Tailwind CSS (v3)** — Utility-first styling framework
+- **Expo Router** — File-based navigation system
+- **react-native-reanimated** — Smooth 60fps UI animations
+- **react-native-safe-area-context** — Screen notch & device inset handler
+- **Zustand** — Lightweight global state management
+- **AsyncStorage** — Persistent key-value local storage on device
+- **Supabase** — Backend database, API & user authentication
+
+> Do not introduce new major libraries unless there is a strong reason.
+
+### Expo SDK Version Rule
+
+- Current SDK: **Expo SDK 57 (v57.x)**
+- Use APIs, packages, and conventions compatible with Expo SDK 57.
+- Do not use deprecated APIs or patterns from older SDK versions.
+- Reference Docs: https://docs.expo.dev/versions/v57.0.0/
+
+---
+
+## Project Structure
+
+Use this structure unless there is a strong reason to change it and create folders only when needed:
+
+├── assets/                  
+├── src/
+│   ├── app/                 
+│   │   ├── (onboarding)/ 
+│   │   └── (tabs)/          
+│   ├── components/        
+│   ├── constants/           
+│   ├── data/                
+│   ├── hooks/               
+│   ├── lib/                 
+│   ├── store/               
+│   ├── types/               
+│   └── utils/               
+
+
+
+
+## Architecture Guidelines
+
+- Keep responsibilities separated. Keep screens, UI components, business logic, and external services organized in appropriate places. Avoid putting too much logic in one file. Follow the existing project structure and patterns.
+
+
+---
+
+## Development Philosophy
+
+- Check this file before coding
+- Keep the implementation simple and easy to understand
+- Build features one step at a time
+- Prefer readability over clever or complex code
+- Write production-quality, maintainable code
+- Avoid unnecessary abstractions, premature optimization, and overengineering
+- Reuse code only when it genuinely reduces duplication
+- Follow existing project patterns instead of introducing new ones
+- Add dependencies only when there is a clear benefit
+- Prioritize correctness, stability, and maintainability over speed of implementation
+- Choose the simplest solution that scales well when multiple options exist
+- Fix the root cause of problems instead of applying temporary workarounds
+- If the project evolves and new patterns emerge, suggest updating this file to reflect them.
+---
+
+
+## Cross-Platform UI Consistency
+
+- The UI should look as close to identical as reasonably possible across both platforms.
+- Do not rely on platform-specific defaults that could make the design look different. Use consistent layouts, spacing, typography, colors, sizing, and components across iOS and Android.
+- Always consider different screen sizes and safe areas (`react-native-safe-area-context`), and prefer responsive solutions (flex layout, percentage/relative spacing) over device-specific fixes.
+- When implementing or modifying UI, prioritize visual consistency across iOS and Android.
+
+
+## Decision Making & Clarifications
+
+If something is unclear or could be improved:
+
+- Proactively suggest better approaches
+
+---
+
+## Dependencies & Third-Party Libraries
+
+- Default to using what is already installed in `package.json`.
+- Do not run `npm install` or add dependencies without explicit user confirmation.
+- When a task would benefit from an external library (e.g., complex gestures, bottom sheets, date pickers):
+  1. Clearly explain why the library is needed.
+  2. Present two choices:
+     - **Option A (Library):** The recommended library and its benefits.
+     - **Option B (Zero-Dependency):** How to achieve a simple/acceptable version using existing tools.
+  3. Wait for the user to choose before proceeding.
+
+---
+
+## Styling Rules
+
+Use NativeWind Tailwind classes for styling strictly. Do not use `StyleSheet` unless something cannot be styled with Tailwind class names.
+
+Prioritize clean, readable mobile UI.
+
+When building from an attached design image:
+
+- Match spacing closely
+- Match typography hierarchy
+- Match border radius and shadows
+- Match layout structure
+- Use consistent reusable styles
+- Make the UI responsive for different screen sizes
+
+Prefer reusable class patterns through utilities in `global.css`. If a utility doesn't exist and you see a possibility, create it as a new utility in `global.css` following the BEM method.
+
+### NativeWind Version Rule
+
+This project uses **NativeWind v4** with **Tailwind CSS v3**:
+
+Before implementing any styling or NativeWind-related code:
+
+- Check the current NativeWind version in `package.json` (`v4.x`)
+- Follow the syntax, setup, and patterns supported by NativeWind v4
+- Do not use NativeWind v5 / Tailwind CSS v4 syntax, config patterns, or CSS-only directives
+- Do not upgrade NativeWind unless the user explicitly approves it
+
+Reference: https://www.nativewind.dev/v4/overview
+
+---
+
+
+
+
+## StyleSheet Exception Rules
+
+Use `StyleSheet` or inline styles **only** for these scenarios where NativeWind cannot be used:
+
+"This project uses NativeWind. If the styling system changes in a future project, review these exceptions accordingly."
+
+| Component / Scenario | Why | Use Instead |
+|---|---|---|
+| **SafeAreaView** | `className` not supported | Inline styles or `StyleSheet` |
+| **Button** | Cannot customize appearance via props | `TouchableOpacity` with custom styles |
+| **KeyboardAvoidingView** | Behavior props not supported by `className` | Inline styles or `StyleSheet` |
+| **Modal** | `visible`, `transparent` props | Inline styles |
+| **ScrollView** | `contentContainerStyle`, `indicatorStyle` | `StyleSheet` |
+| **TextInput** | Input-specific props like `underlineColorAndroid` | Inline styles |
+| **Animated.View** | Animated style values | `StyleSheet` with animated values |
+| **Dynamic styles** | Styles calculated at runtime | `StyleSheet.create()` or inline |
+| **Platform-specific** | iOS-only or Android-only props | Conditional inline styles |
+| **Pressable / TouchableOpacity** | `style` prop for pressed states | `StyleSheet` |
+| **Shadow (iOS/Android)** | Different shadow syntax per platform | `StyleSheet` with platform checks |
+| **Transform arrays** | Complex transform combinations | `StyleSheet` |
+| **Z-index** | Sometimes needs explicit StyleSheet | `StyleSheet` |
+
+Use `StyleSheet` or inline styles when:
+
+- The prop is React Native-specific (not web-equivalent)
+- The value is dynamic or calculated at runtime
+- Platform-specific behavior is needed
+- NativeWind doesn't map the property to a style
+
+### SafeAreaView Example
+
+```tsx
+// ✅ CORRECT
+import { SafeAreaView } from "react-native-safe-area-context";
+
+function MyScreen() {
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      {/* content */}
+    </SafeAreaView>
+  );
+}
+
+// ❌ INCORRECT
+function MyScreen() {
+  return (
+    <SafeAreaView className="flex-1 bg-white">{/* content */}</SafeAreaView>
+  );
+}
+```
+
+Otherwise, always stick to NativeWind utilities.
+
+---
+
+
+
+---
+
+## TypeScript Rules
+
+- Use TypeScript strictly
+- No `any` — ever
+- Keep types simple and readable
+- Define shared types in `src/types/` (or `@/types`), co-locate if feature-specific
+- Type all API and service responses
+
+---
+
+
+## State Management Rules
+
+- Keep state as local as possible.
+- Use local useState for component-specific UI state.
+- Use Zustand when state needs to be shared across screens.
+- Avoid unnecessary global state.
+- Persist with AsyncStorage only when necessary.
+---
+
+## Feature Implementation Rules
+
+When the user asks to build a feature:
+
+1. Read this file first
+2. Identify files to change
+3. Keep changes focused
+4. Do not rewrite unrelated code
+5. Follow existing patterns
+6. Ensure the feature works end-to-end
+7. Fix all errors before finishing 
+8. If the request is unclear, ask one clarifying question before starting.
+
+---
+
+## Linting & Validation
+
+After every implementation, run:
+
+- Run `npm run lint` and fix all errors
+- Run `npm run typecheck` and fix all errors
+- Remove unused imports and console.log statements
+- Do not consider the task done until all of the above pass
+
+---
+
+## Communication Style
+
+- Be concise
+- Explain what changed and how to test it
+
+---
+
+## Final Reminder
+
+Before every feature implementation:
+
+- Read this file
+- Follow it strictly
+- Build clean, simple, teachable code
+- Replicate UI exactly when designs are provided

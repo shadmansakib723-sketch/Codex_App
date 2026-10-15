@@ -1,0 +1,120 @@
+import { Pressable, StyleSheet, View } from "react-native";
+import { Text } from "react-native";
+import type { SvgProps } from "react-native-svg";
+
+import CoinIcon from "../../assets/coin.svg";
+import FireIcon from "../../assets/fire.svg";
+import FriendIcon from "../../assets/friend.svg";
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+/**
+ * StatsBar
+ *
+ * A horizontal row of three stat tiles: Streak, Friends, Points.
+ * Matches the design reference image — rounded pill container,
+ * soft icon bubbles, green/gold accent colours.
+ *
+ * Pure UI — no logic or props needed for now.
+ * Styled with NativeWind classes; StyleSheet used only for
+ * platform shadow (iOS/Android).
+ */
+interface StatsBarProps {
+  /** Called when the user taps the streak tile */
+  onStreakPress: () => void;
+}
+
+export function StatsBar({ onStreakPress }: StatsBarProps) {
+  return (
+    <View style={styles.container} className="mx-4 flex-row rounded-3xl bg-surface px-3 py-3">
+      {/* ── Streak ─────────────────────────────────────────────────── */}
+      <Pressable onPress={onStreakPress} style={styles.streakPressable}>
+        <StatTile
+          iconBg="bg-orange-100"
+          Icon={FireIcon}
+          value="5 Days"
+          label="Streak"
+        />
+      </Pressable>
+
+      {/* ── Separator ──────────────────────────────────────────────── */}
+      <View style={styles.separator} />
+
+      {/* ── Friends ────────────────────────────────────────────────── */}
+      <StatTile
+        iconBg="bg-green-100"
+        Icon={FriendIcon}
+        value="3 / 7"
+        label="Friends"
+      />
+
+      {/* ── Separator ──────────────────────────────────────────────── */}
+      <View style={styles.separator} />
+
+      {/* ── Points ─────────────────────────────────────────────────── */}
+      <StatTile
+        iconBg="bg-yellow-100"
+        Icon={CoinIcon}
+        value="320"
+        label="Points"
+      />
+    </View>
+  );
+}
+
+// ─── StatTile ─────────────────────────────────────────────────────────────────
+
+interface StatTileProps {
+  /** Background colour class for the icon bubble */
+  iconBg: string;
+  /** SVG icon component */
+  Icon: React.FC<SvgProps>;
+  /** Big number / primary value */
+  value: string;
+  /** Top-row label */
+  label: string;
+}
+
+function StatTile({ iconBg, Icon, value, label }: StatTileProps) {
+  return (
+    <View className="flex-1 flex-row items-center gap-x-2 px-1">
+      {/* Icon bubble */}
+      <View
+        className={`h-11 w-11 items-center justify-center rounded-2xl ${iconBg}`}
+      >
+        <Icon width={24} height={24} />
+      </View>
+
+      {/* Text block */}
+      <View className="flex-1">
+        <Text className="font-poppins text-xs text-text-secondary">{label}</Text>
+        <Text className="font-poppins-bold text-base text-brand-dark leading-tight">
+          {value}
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+// ─── Styles ───────────────────────────────────────────────────────────────────
+
+const styles = StyleSheet.create({
+  container: {
+    // Shadow — iOS
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    // Shadow — Android
+    elevation: 3,
+  },
+  separator: {
+    width: 1,
+    backgroundColor: "#E0E0E0",
+    marginVertical: 6,
+    alignSelf: "stretch",
+  },
+  streakPressable: {
+    flex: 1,
+  },
+});
