@@ -16,8 +16,10 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~57.0.16",
+    "@react-native-vector-icons/ionicons": "^13.1.5",
     "expo": "~57.0.27",
     "expo-constants": "~57.0.21",
+    "expo-font": "~57.0.4",
     "expo-linking": "~57.0.12",
     "expo-router": "~57.0.28",
     "expo-status-bar": "~57.0.1",

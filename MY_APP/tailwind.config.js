@@ -5,13 +5,17 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      fontFamily: {
+        navigation: ["PoppinsMedium"],
+      },
       colors: {
         artwork: "#DFE7E4",
         panel: "#FAFAF8",
         navigation: {
-          active: "#245C46",
-          inactive: "#626963",
-          border: "#E5E8E5",
+          active: "#25272D",
+          inactive: "#6F7471",
+          border: "#EFF0EE",
+          selected: "#F1F2F1",
         },
       },
     },

@@ -1,21 +1,60 @@
 # Agent Instructions
 Read the exact versioned docs at https://docs.expo.dev/versions/v57.0.0/ 
 
-## New-Session Handoff Rules
+## Codex Desktop Role & Workflow
 
 This file is the first instruction to read at the beginning of every session.
 
+Act as the user's coding collaborator in Codex Desktop. The user understands
+the product they want but is not an experienced programmer. Explain the work
+in plain English and help them understand the purpose of each file.
+
+### Explain the plan before changing files
+
+When the user requests project changes, read the relevant instructions and
+inspect the existing files as needed. Before creating, editing, renaming, or
+deleting any project file, explain:
+
+1. What you understand the user wants and what you will build or change.
+2. Every file you plan to touch or create, using its exact path. For each file,
+   explain its purpose, the specific changes planned, and why they are needed.
+3. How the changes will work together and what the user will notice in the app.
+4. How you will check the work and what the user should test on their device.
+
+Give enough detail for the user to understand the plan; do not just list file
+names or say that you will implement the feature. Explain first, then carry out
+the requested work. If you discover that additional files or a different
+approach are needed, explain the updated plan before making those changes.
+Wait for confirmation when the user asks you to wait or a separate approval is
+required; explaining the plan does not by itself require another approval.
+
+After editing, open each created or edited file in Codex so the user does not
+have to find it manually. Report a queued opening request accurately; do not
+claim a file visibly opened when it was only queued. Deleted files cannot be
+opened; explain what was removed instead.
+
+### Session continuity and project boundaries
+
 - This is a clean rebuild of the app. Use the old project only as a visual or
   behavior reference when explicitly useful; do not copy its implementation.
-- The user will test the app using Expo Go or an emulator. Do not spend time
-  opening or troubleshooting a browser preview unless the user specifically
-  asks for browser testing.
-- Before making changes, read the newest numbered folder inside `docs/` and
-  use it to understand what has already been built and verified.
-- After each implementation session, create the next numbered folder inside
-  `docs/` (`docs/1/`, then `docs/2/`, then `docs/3/`, and so on). Record the
-  changes made, important decisions, validation performed, known limitations,
-  and useful next steps. Do not rewrite older session records.
+- The user tests the installed app on an emulator or a physical phone connected
+  through USB. Base setup and testing instructions on this workflow.
+- Do not suggest Expo Go or use its compatibility as a reason to choose a
+  library unless the user specifically asks about it. Do not open or
+  troubleshoot a browser preview unless the user asks for browser testing.
+- Before making changes, read the latest chat handoff in `docs/sessions/`:
+  `S1.md`, then `S2.md`, and so on. Compare the numeric part, not alphabetical
+  order. Read any specific handoff the user names as well.
+- Keep one Markdown handoff per actual chat, not per feature, user message,
+  or small change. Update the same chat's file as work progresses. When a new
+  chat begins, read the previous handoff and use the next number for the new
+  chat's own record, unless the user specifies its name.
+- The original 13 per-change notes were consolidated into
+  `docs/sessions/S1.md` at the user's request. Do not recreate the old flat
+  `session-summary-N.md` files or create a folder for every individual change.
+- Each handoff should record changes, important decisions, verified checks,
+  user-reported results, limitations, and useful next steps. Preserve earlier
+  chat handoffs unless the user asks to consolidate, correct, or delete them.
 - Keep the documentation plain and understandable for a non-engineer. Clearly
   separate verified facts from assumptions or future plans.
 - Do not change, delete, or rename project files unless the user explicitly
@@ -66,7 +105,7 @@ An **Islamic Prayer (Salah) habit tracker and friend accountability app** built 
 - **AsyncStorage** — Persistent key-value local storage on device
 - **Supabase** — Backend database, API & user authentication
 
-> Do not introduce new major libraries unless there is a strong reason.
+> Use libraries when they simplify the implementation. Follow the approval rule below before adding one.
 
 ### Expo SDK Version Rule
 
@@ -141,14 +180,14 @@ If something is unclear or could be improved:
 
 ## Dependencies & Third-Party Libraries
 
-- Default to using what is already installed in `package.json`.
-- Do not run `npm install` or add dependencies without explicit user confirmation.
-- When a task would benefit from an external library (e.g., complex gestures, bottom sheets, date pickers):
-  1. Clearly explain why the library is needed.
-  2. Present two choices:
-     - **Option A (Library):** The recommended library and its benefits.
-     - **Option B (Zero-Dependency):** How to achieve a simple/acceptable version using existing tools.
-  3. Wait for the user to choose before proceeding.
+- Use a suitable library when it makes the code simpler, clearer, more reliable,
+  or easier to maintain. Do not write complicated custom code just to avoid a
+  useful library.
+- Before adding a new library, tell the user which library you recommend, how
+  it helps, and any important trade-offs. Ask for approval and wait for the
+  user's answer before installing or using it.
+- Reuse suitable libraries already installed in the project.
+- Add a library only when it provides a clear benefit to the requested work.
 
 ---
 
